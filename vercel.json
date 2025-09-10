@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npm run build",
-  "installCommand": "npm ci",
   "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
   "outputDirectory": ".next",
   "env": {
     "NEXT_TELEMETRY_DISABLED": "1"
