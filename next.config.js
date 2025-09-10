@@ -3,11 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   eslint: {
-    ignoreDuringBuilds: true, // ✅ Prevents Vercel from breaking builds
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true, // ✅ Ignores TS errors during builds
+    ignoreBuildErrors: true,
   },
+  experimental: {
+    appDir: true,
+  },
+  // ✅ Fixes prerender error for 404 & 500
+  output: "standalone",
 };
 
 module.exports = nextConfig;
@@ -39,4 +44,5 @@ module.exports = nextConfig;
 };
 
 module.exports = nextConfig;
+
 
