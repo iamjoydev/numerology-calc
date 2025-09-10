@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ✅ Strict mode for better performance
   reactStrictMode: true,
-  swcMinify: true,
-  trailingSlash: false,
 
-  // ✅ Disable strict TypeScript & ESLint checks during Vercel build
+  // ✅ Enable SWC compiler for faster builds
+  swcMinify: true,
+
+  // ✅ Ignore build errors for smooth Vercel deployments
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -12,68 +14,36 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // ✅ Enable experimental optimizations
+  // ✅ Disable Next.js experimental Critters CSS optimizer
+  // We manually installed Critters, but disable auto-inlining to prevent build crashes
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
     scrollRestoration: true,
   },
-a
- 
 
-module.exports = nextConfig;
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  trailingSlash: false,
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
- // ✅ Fixes build errors on Vercel for static export
+  // ✅ Fix for Vercel standalone deployment builds
   output: "standalone",
 
-  // ✅ Disable strict TypeScript & ESLint checks during Vercel build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  // ✅ Optional: Custom headers for caching performance
+  // ✅ Add cache headers for faster Vercel CDN performance
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, must-revalidate" },
-        ],
-      },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, must-revalidate"
+          }
+        ]
+      }
     ];
   },
-};
-  // ✅ Avoid Critters breaking prerender builds
-  experimental: {
-    optimizeCss: false, // DISABLE broken automatic Critters optimization
-    scrollRestoration: true,
-  },
 
-  output: "standalone",
-
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, must-revalidate" },
-        ],
-      },
-    ];
-  },
+  // ✅ Enable image optimization for better SEO
+  images: {
+    domains: ["localhost", "yourdomain.com"],
+    formats: ["image/avif", "image/webp"],
+  }
 };
 
 module.exports = nextConfig;
